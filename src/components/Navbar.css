@@ -1,0 +1,20 @@
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+}
+
+.navbar-list {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar-list li {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.navbar-list li a {
+    text-decoration: none;
+    color: black;
+}
