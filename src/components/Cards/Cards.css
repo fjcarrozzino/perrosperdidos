@@ -1,0 +1,21 @@
+.card-picture img {
+    height: 15rem;
+    width: 15rem;
+}
+
+.card-container {
+    display: grid;
+    padding: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+
+    
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}

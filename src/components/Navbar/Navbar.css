@@ -1,12 +1,14 @@
 .container-header {
     display: flex;
     justify-content: space-between;
-    padding: 0rem 1rem;
+    padding: 0.2rem 0.3rem;
 }
+
 
 .navbar-list {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 
 .navbar-list li {
@@ -17,4 +19,10 @@
 .navbar-list li a {
     text-decoration: none;
     color: black;
+}
+
+.profile-pic-nav {
+    border-radius: 50px;
+    height: 45px;
+    width: 45px;
 }
