@@ -29,6 +29,7 @@ const Login = () => {
     <div>
       <GoogleLogin
         onSuccess={(codeResponse) => {
+          console.log(codeResponse)
             logIn(codeResponse);
         }}
         onError={() => {

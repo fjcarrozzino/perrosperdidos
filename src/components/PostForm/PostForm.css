@@ -1,0 +1,15 @@
+.postform-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.postform-container select {
+    min-width: 162px;
+}
+
+.postform-container input {
+    min-width: 162px;
+}
