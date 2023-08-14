@@ -47,7 +47,7 @@ function App() {
             <Route path="/*" element={<Home />} />
           )}
           {user ? (
-            <Route path="/editmyposts" element={<EditPostPage/>} />
+            <Route path="/editmyposts/:postId" element={<EditPostPage/>} />
           ) : (
             <Route path="/*" element={<Home />} />
           )}

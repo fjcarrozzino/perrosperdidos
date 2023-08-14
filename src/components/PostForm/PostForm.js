@@ -29,7 +29,7 @@ const PostForm = () => {
       [name]: value,
     }));
   };
-
+  
   const renderInputs = () => {
     return Object.keys(inputValues).map((inputName) => {
       if (inputName === "animal") {
@@ -110,7 +110,7 @@ const PostForm = () => {
         toast.success("Your post has been submitted.");
         setTimeout(() => {
           navigate("/");
-        }, 1500);
+        }, 1000);
       } catch (error) {
         console.error("Error al guardar el dato:", error);
       }

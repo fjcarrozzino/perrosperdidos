@@ -33,9 +33,9 @@ const Navbar = () => {
           <li>
             <Link to={"/perros"}>Pets</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to={"/formulario"}>Form</Link>
-          </li>
+          </li> */}
           {userSelector ? (
             <li>
               <Link to={"/post"}>Post </Link>
