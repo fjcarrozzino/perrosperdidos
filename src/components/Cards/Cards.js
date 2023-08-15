@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import db from "../../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import "../Cards/Cards.css";
+import { useNavigate } from "react-router-dom";
 
 const Cards = () => {
   const [animales, SetAnimales] = useState("");
+  const navigate = useNavigate()
   
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -18,11 +20,16 @@ const Cards = () => {
 
   const data = animales;
 
+  const editPost = (postId) => {
+    navigate(`/postdetail/${postId}`)
+  
+  }
+
   return (
     <div className="card-container">
       {data
         ? data.map((info, index) => (
-            <div key={index + info.breed.stringValue} className="cards">
+            <div key={index + info.breed.stringValue} onClick={() => editPost(info?.postId?.stringValue)} className="cards">
               <div className="card-picture">
                 <img src={info?.picture?.stringValue} alt={info.nombre}></img>
               </div>

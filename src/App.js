@@ -12,6 +12,7 @@ import { isExpired } from "react-jwt";
 import Post from "./pages/Post";
 import MyPosts from "./pages/MyPosts";
 import EditPostPage from "./pages/EditPostPage";
+import DetailsPost from "./pages/DetailsPost";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/perros" element={<Perros />} />
           <Route path="/formulario" element={<Form />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/postdetail/:postId" element={<DetailsPost/>}/>
           {user ? (
             <Route path="/post" element={<Post />} />
           ) : (
