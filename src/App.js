@@ -5,16 +5,16 @@ import Home from "./pages/Home";
 import Perros from "./pages/Perros";
 import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout, selectAllUsers, selectUser, setAllUsers } from "./redux/userSlice";
+import { login, logout, selectUser, setAllUsers } from "./redux/userSlice";
 import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { isExpired } from "react-jwt";
 import Post from "./pages/Post";
 import MyPosts from "./pages/MyPosts";
 import DetailsPost from "./pages/DetailsPost";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import db from "./firebase/firebaseConfig";
-import EditPostPage from "./pages/editPostPage";
+import EditPostPage from './pages/EditPostPage'
 
 function App() {
   const dispatch = useDispatch();
