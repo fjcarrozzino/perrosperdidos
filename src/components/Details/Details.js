@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../Details/Details.css";
 import { useParams } from "react-router-dom";
-import { collection, collectionGroup, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import db from "../../firebase/firebaseConfig";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/userSlice";
+import { selectAllUsers, selectUser } from "../../redux/userSlice";
+import Randomstring from "randomstring";
 
 const Details = () => {
   const { postId } = useParams();
   const [postData, setPostData] = useState([]);
   const [postCommentary, setPostCommentary] = useState([]);
+  const [comentaryInput, setComentaryInput] = useState("");
+  const [reload, setReload] = useState(false)
+  const allUsers = useSelector(selectAllUsers);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -26,35 +30,72 @@ const Details = () => {
     obtenerDatos();
 
     const obtenerComentarios = async () => {
-
-        const querySnapshot = await getDocs(collection(db, "mascotas", postId, "comentarios"));
-        const comentariosData = [];
-        querySnapshot.forEach((doc) => {
-            if (doc.exists()) {
-                comentariosData.push(doc.data());
-            } else {
-                console.log("No such document!");
-            }
-        });
-        setPostCommentary(comentariosData);
+      const querySnapshot = await getDocs(
+        collection(db, "mascotas", postId, "comentarios")
+      );
+      const comentariosData = [];
+      querySnapshot.forEach((doc) => {
+        if (doc.exists()) {
+          comentariosData.push(doc.data());
+        } else {
+          console.log("No such document!");
+        }
+      });
+      setPostCommentary(comentariosData);
     };
     obtenerComentarios();
-  }, [postId]);
+  }, [postId, reload]);
 
-  
-    console.log(postCommentary);
+  const submitCommentary = async (e) => {
+    e.preventDefault();
+    const randomId = Randomstring.generate(20);
 
-    const renderComentarios = (infoComentarios) => {
-      console.log(user)
-     return infoComentarios.map((comentario) => (
-        <div>
-          {console.log(comentario)}
-          <p>
-            {comentario?.commentary}
+    const valuesToSave = {
+      user: user?.given_name,
+      userId: user?.sub,
+      commentaryId: randomId,
+      commentary: comentaryInput,
+      time: new Date(),
+    };
+    console.log(user)
+    if (user && comentaryInput.length) {
+      try {
+        await setDoc(
+          doc(db, "mascotas", postId, "comentarios", randomId),
+          valuesToSave
+        );
+        console.log("Your post has been submitted.");
+      } catch (error) {
+        console.error("Error al guardar el dato:", error);
+      }
+    } else {
+      console.log("You must login to comment.");
+    }
+    // Guardar el valor en Firestore
+    setReload(!reload)
+    setComentaryInput('')
+  };
+
+  const renderComentarios = (infoComentarios) => {
+    const sortedComments = infoComentarios.sort(
+      (a, b) => a.time.seconds - b.time.seconds
+    );
+    return sortedComments.map((comentario) => {
+      return (
+        <div key={comentario?.commentaryId} className="commentary-div">
+          <p className="commentary">
+            {comentario?.user}: {comentario?.commentary}
           </p>
         </div>
-      ))
-    }
+      );
+    });
+  };
+
+
+
+  const handleInputChange = (e) => {
+    setComentaryInput(e.target.value);
+  };
 
   return (
     <div className="detail-post-container">
@@ -77,6 +118,14 @@ const Details = () => {
       </div>
       <div className="comentary-container">
         {renderComentarios(postCommentary)}
+        <input
+          key="comentario"
+          type="text"
+          name="comentario"
+          value={comentaryInput}
+          onChange={handleInputChange}
+        />
+        <button onClick={submitCommentary}>send</button>
       </div>
     </div>
   );

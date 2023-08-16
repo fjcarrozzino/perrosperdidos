@@ -11,10 +11,10 @@ import jwtDecode from "jwt-decode";
 import { isExpired } from "react-jwt";
 import Post from "./pages/Post";
 import MyPosts from "./pages/MyPosts";
-import EditPostPage from "./pages/EditPostPage";
 import DetailsPost from "./pages/DetailsPost";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "./firebase/firebaseConfig";
+import EditPostPage from "./pages/editPostPage";
 
 function App() {
   const dispatch = useDispatch();
