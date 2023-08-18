@@ -12,7 +12,7 @@ const Details = () => {
   const [postData, setPostData] = useState([]);
   const [postCommentary, setPostCommentary] = useState([]);
   const [comentaryInput, setComentaryInput] = useState("");
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false);
   const allUsers = useSelector(selectAllUsers);
   const user = useSelector(selectUser);
 
@@ -57,7 +57,7 @@ const Details = () => {
       commentary: comentaryInput,
       time: new Date(),
     };
-    console.log(user)
+    console.log(user);
     if (user && comentaryInput.length) {
       try {
         await setDoc(
@@ -72,8 +72,8 @@ const Details = () => {
       console.log("You must login to comment.");
     }
     // Guardar el valor en Firestore
-    setReload(!reload)
-    setComentaryInput('')
+    setReload(!reload);
+    setComentaryInput("");
   };
 
   const renderComentarios = (infoComentarios) => {
@@ -91,11 +91,10 @@ const Details = () => {
     });
   };
 
-
-
   const handleInputChange = (e) => {
     setComentaryInput(e.target.value);
   };
+
 
   return (
     <div className="detail-post-container">

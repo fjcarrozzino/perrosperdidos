@@ -2,8 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    gap: 1rem;
+    gap: 4rem;
 }
 
 .postform-container select {
@@ -12,4 +11,14 @@
 
 .postform-container input {
     min-width: 162px;
+}
+
+.map-location-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.map-location-container input {
+    width: 30%;
 }
