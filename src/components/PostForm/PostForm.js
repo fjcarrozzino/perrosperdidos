@@ -30,8 +30,7 @@ const PostForm = () => {
     location: "",
     breed: "",
   });
-  const [latitud, setLatitud] = useState("")
-  const [longitud, setLongitud] = useState("")
+  const [ center, setCenter] = useState([])
   const [searchLocation, setSearchLocation] = useState([])
   const navigate = useNavigate();
   const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
@@ -89,13 +88,10 @@ const PostForm = () => {
   };
 
   const lonLatSet = (lon, lat) => {
-    setLatitud(lat)
-    setLongitud(lon)
+    setCenter([lat, lon])
   }
 
   console.log(searchLocation)
-  console.log(longitud)
-  console.log(latitud)
 
   return (
     <div className="postform-container">
@@ -196,8 +192,7 @@ const PostForm = () => {
             );
           })}
         </List>
-
-        <Map />
+        <Map center={center}/>
       </div>
       <Toaster position="bottom-right" reverseOrder={false} gutter={8} />
     </div>

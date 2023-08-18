@@ -1,11 +1,28 @@
-import React, { useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
+import React, { useEffect, useState } from 'react'
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet'
 import {Icon} from 'leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 
-const position = [51.505, -0.09]
+function ChangeView({ center }) {
+  const map = useMap();
+  map.setView(center);
+  return null;
+}
 
-const Map = (lonLat) => {
+const Map = ({ center }) => {
+  const [position, setPosition] = useState([51.505, -0.09])
+  console.log(center)
+
+  useEffect(() => {
+    if(center.length) {
+      setPosition(center)
+    }
+
+  },[center])
+
+  console.log('soy position', position)
+
+  
   function LocationMarker() {
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
@@ -38,9 +55,10 @@ const Map = (lonLat) => {
   // </MapContainer>
     <MapContainer
     style={{height: '400px', width: '700px'}}
-    center={{ lat: 51.505, lng: -0.09 }}
+    center={position}
     zoom={13}
     scrollWheelZoom={false}>
+    <ChangeView center={position} />
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
