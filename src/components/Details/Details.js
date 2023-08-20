@@ -6,6 +6,7 @@ import db from "../../firebase/firebaseConfig";
 import { useSelector } from "react-redux";
 import { selectAllUsers, selectUser } from "../../redux/userSlice";
 import Randomstring from "randomstring";
+import MapDetails from "./MapDetails";
 
 const Details = () => {
   const { postId } = useParams();
@@ -57,7 +58,6 @@ const Details = () => {
       commentary: comentaryInput,
       time: new Date(),
     };
-    console.log(user);
     if (user && comentaryInput.length) {
       try {
         await setDoc(
@@ -95,7 +95,6 @@ const Details = () => {
     setComentaryInput(e.target.value);
   };
 
-
   return (
     <div className="detail-post-container">
       <div className="picture-description-container">
@@ -107,12 +106,17 @@ const Details = () => {
           />
         </div>
         <div className="description-container">
-          <p>{postData?.animal}</p>
-          <p>{postData?.breed}</p>
-          <p>{postData?.location}</p>
-          <p>{postData?.user}</p>
-          <p>{postData?.age}</p>
-          <p>{postData?.color}</p>
+          <div>
+            <p>{postData?.animal}</p>
+            <p>{postData?.breed}</p>
+            <p>{postData?.location}</p>
+            <p>{postData?.user}</p>
+            <p>{postData?.age}</p>
+            <p>{postData?.color}</p>
+          </div>
+          <div>
+            <MapDetails position={postData?.latLon} />
+          </div>
         </div>
       </div>
       <div className="comentary-container">

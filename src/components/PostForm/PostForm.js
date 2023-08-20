@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../PostForm/PostForm.css";
 import db from "../../firebase/firebaseConfig";
 import "firebase/firestore";
@@ -9,14 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/userSlice";
 import Map from "../Map/Map";
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  OutlinedInput,
-} from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 
@@ -30,10 +23,27 @@ const PostForm = () => {
     location: "",
     breed: "",
   });
-  const [ center, setCenter] = useState([])
-  const [searchLocation, setSearchLocation] = useState([])
+  const [center, setCenter] = useState([]);
+  const [searchLocation, setSearchLocation] = useState([]);
   const navigate = useNavigate();
+
   const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
+  const [showOptions, setShowOptions] = useState(false); // Nuevo estado
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      const listContainer = document.querySelector(".input-list-location-container");
+      if (listContainer && !listContainer.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +51,12 @@ const PostForm = () => {
       ...prevValues,
       [name]: value,
     }));
+
+    if (value.trim() === "") {
+      setShowOptions(false);
+      setSearchLocation([]);
+      return;
+    }
   };
 
   const isValidUrl = (string) => {
@@ -54,7 +70,6 @@ const PostForm = () => {
 
   const handleSubmitFirebase = async (e, dataToSave) => {
     e.preventDefault();
-    console.log(dataToSave);
     const areAllValuesValid = Object.values(dataToSave).every(
       (value) => value !== ""
     );
@@ -68,6 +83,7 @@ const PostForm = () => {
       user: user?.given_name,
       userId: user?.sub,
       postId: randomId,
+      latLon: center,
     };
 
     if (isValidUrl(dataToSave.picture) && areAllValuesValid) {
@@ -87,11 +103,37 @@ const PostForm = () => {
     // Guardar el valor en Firestore
   };
 
-  const lonLatSet = (lon, lat) => {
-    setCenter([lat, lon])
-  }
+  const lonLatSet = (lon, lat, location) => {
+    setCenter([lat, lon]);
+    setShowOptions(false);
+    setInputValues((prevValues) => ({
+      ...prevValues,
+      location: location
+    }))
+  };
 
-  console.log(searchLocation)
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // 👇 Get input value
+      const params = {
+        q: inputValues.location,
+        format: "jsonv2",
+      };
+      const queryString = new URLSearchParams(params).toString();
+      axios({
+        method: "get",
+        url: `${NOMINATIM_BASE_URL}${queryString}`,
+      }).then((response) => {
+        const uniqueData = [
+          ...new Set(response.data.map((item) => item.display_name)),
+        ].map((displayName) =>
+          response.data.find((item) => item.display_name === displayName)
+        );
+        setSearchLocation(uniqueData);
+        setShowOptions(true)
+      });
+    }
+  };
 
   return (
     <div className="postform-container">
@@ -149,50 +191,32 @@ const PostForm = () => {
       </div>
       <div className="map-location-container">
         <p>Location: </p>
-        <div>
+        <div className="input-list-location-container">
           <input
-            key="location"
             type="text"
             name="location"
-            value={inputValues.location}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            value={inputValues.location}
           />
-          <button
-            onClick={() => {
-              // Search
-              const params = {
-                q: inputValues.location,
-                format: "jsonv2",
-              };
-              const queryString = new URLSearchParams(params).toString();
-              axios({
-                method: 'get',
-                url: `${NOMINATIM_BASE_URL}${queryString}`,
-              })
-                .then((response) =>  {
-                  setSearchLocation(response.data)
-                });
-            }}
+          <ul
+            className={`search-list${showOptions ? "" : " hidden"} search-list`}
           >
-            submit
-          </button>
+            {
+              searchLocation.map((option, index) => (
+                <ol
+                  className="search-list-ol"
+                  key={option + index}
+                  onClick={() => lonLatSet(option?.lon, option?.lat, option?.display_name)}
+                >
+                  {option.display_name}
+                </ol>
+              ))
+         }
+          </ul>
+
         </div>
-        <List component="nav" aria-label="main mailbox folders">
-          {searchLocation?.map((item, index) => {
-            return (
-              <div key={index}>
-                <ListItem>
-                  <ListItemIcon>
-                    <LocationOnIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={item?.display_name} onClick={() => lonLatSet(item?.lon, item?.lat)} />
-                </ListItem>
-                <Divider />
-              </div>
-            );
-          })}
-        </List>
-        <Map center={center}/>
+        <Map center={center} />
       </div>
       <Toaster position="bottom-right" reverseOrder={false} gutter={8} />
     </div>
