@@ -30,14 +30,18 @@ function ResetCenterView({ center }) {
 }
 
 const MapEditPage = ({ center, latLon }) => {
-  const [position, setPosition] = useState(latLon ? latLon : [51.505, -0.09])
+  const initialPosition = latLon || [51.505, -0.09];
+  const [position, setPosition] = useState(initialPosition)
+  console.log(latLon)
 
   useEffect(() => {
     if(center.length) {
       setPosition(center)
     }
 
-  },[center])
+  },[center, latLon, position])
+
+
 
   return (
     <MapContainer

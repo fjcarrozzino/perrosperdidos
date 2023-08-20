@@ -241,7 +241,7 @@ const EditPostPage = () => {
                   ))}
                 </ul>
               </div>
-              <MapEditPage center={center} latLon={postData?.latLon} />
+              <MapEditPage center={center} latLon={postData?.latLon}/>
             </div>
             <p>Created By: {inputValues.user}</p>
             <button onClick={(e) => handleSubmitFirebase(e, inputValues)}>
