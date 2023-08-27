@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
+import { Button } from "@mui/joy";
 
 const UserPosts = () => {
   const [animales, SetAnimales] = useState("");
@@ -41,33 +42,44 @@ const UserPosts = () => {
     }, 1000);
   };
 
+  const editPost = (postId) => {
+    navigate(`/postdetail/${postId}`)
+  
+  }
+
   return (
     <div className="card-container">
       {userPosts.length
         ? userPosts.map((info, index) => (
-            <div key={index + info?.breed?.stringValue} className="cards">
+            <div key={index + info?.breed?.stringValue} onClick={() => editPost(info?.postId?.stringValue)} className="cards">
               <div className="card-picture">
                 <img src={info?.picture?.stringValue} alt={info.nombre}></img>
               </div>
               <div className="card-info">
-                <p>Animal: {info?.animal?.stringValue}</p>
-                <p>Color: {info?.color?.stringValue}</p>
-                <p>Age: {info?.age?.integerValue}</p>
-                <p>Breed: {info?.breed?.stringValue}</p>
-                <p>Location: {info?.location?.stringValue}</p>
-                <p>Created By: {info?.user?.stringValue}</p>
+                <div>
+                <p> <span>Animal:</span> {info?.animal?.stringValue}</p>
+                <p><span>Breed:</span> {info.breed?.stringValue}</p>
+                </div>
+                <div>
+                <p><span>Color:</span> {info.color?.stringValue}</p>
+                <p><span>Age:</span> {info.age?.integerValue}</p>
+                </div>
+                <p><span>Location:</span> {info.location?.stringValue}</p>
+                <p className="created-by">Created By: {info.user?.stringValue}</p>
               </div>
-              <div>
+              <div className="edit-delete-buttons">
 
               <div>
                 <Link to={`/editmyposts/${info?.postId?.stringValue}`}>
+                <Button size="sm" variant="solid" color="primary">
                   Edit
+                </Button>
                 </Link>
               </div>
               <div>
-                <button onClick={() => deletePost(info?.postId?.stringValue)}>
+                <Button size="sm" variant="solid" color="danger" onClick={() => deletePost(info?.postId?.stringValue)}>
                   Delete Post
-                </button>
+                </Button>
                 </div>
               </div>
             </div>

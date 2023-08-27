@@ -3,14 +3,11 @@
     justify-content: center;
     align-items: center;
     gap: 4rem;
+    padding: 2rem;
 }
-
-.postform-container select {
-    min-width: 162px;
-}
-
 .postform-container input {
     min-width: 162px;
+    padding-left: 0.3rem;
 }
 
 .map-location-container {
@@ -21,6 +18,11 @@
 
 .map-location-container input {
     width: 30%;
+}
+
+.post-button {
+    display: flex;
+    padding-top: 1rem;
 }
 
 .search-list-ol {
@@ -61,3 +63,10 @@
 .search-list.hidden {
     display: none;
   }
+
+.post-form {
+    padding: .5rem .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}

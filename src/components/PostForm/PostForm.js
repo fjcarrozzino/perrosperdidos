@@ -12,6 +12,7 @@ import Map from "../Map/Map";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
+import { Button, Input, Option, Select } from "@mui/joy";
 
 const PostForm = () => {
   const user = useSelector(selectUser);
@@ -137,22 +138,22 @@ const PostForm = () => {
 
   return (
     <div className="postform-container">
-      <div className="card-info">
+      <div className="post-form">
         <p>Animal: </p>
-        <select
+        <Select
           name="animal"
           value={inputValues.animal}
           onChange={handleInputChange}
         >
-          <option value="Dog" defaultValue="Dog">
+          <Option value="Dog" defaultValue="Dog">
             Dog
-          </option>
-          <option value="Cat" defaultValue="Cat">
+          </Option>
+          <Option value="Cat" defaultValue="Cat">
             Cat
-          </option>
-        </select>
+          </Option>
+        </Select>
         <p>Color:</p>
-        <input
+        <Input
           key="color"
           type="text"
           name="color"
@@ -160,7 +161,7 @@ const PostForm = () => {
           onChange={handleInputChange}
         />
         <p>Age:</p>
-        <input
+        <Input
           key="age"
           type="number"
           name="age"
@@ -168,7 +169,7 @@ const PostForm = () => {
           onChange={handleInputChange}
         />
         <p>Picture Link:</p>
-        <input
+        <Input
           key="picture"
           type="text"
           name="picture"
@@ -176,17 +177,17 @@ const PostForm = () => {
           onChange={handleInputChange}
         />
         <p>Breed: </p>
-        <input
+        <Input
           key="breed"
           type="text"
           name="breed"
           value={inputValues.breed}
           onChange={handleInputChange}
         />
-        <div>
-          <button onClick={(e) => handleSubmitFirebase(e, inputValues)}>
+        <div className="post-button">
+          <Button onClick={(e) => handleSubmitFirebase(e, inputValues)}>
             Post
-          </button>
+          </Button>
         </div>
       </div>
       <div className="map-location-container">

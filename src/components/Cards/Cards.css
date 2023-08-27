@@ -2,12 +2,13 @@
     width: 100%;
     height: 15rem;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .card-container {
     display: grid;
     padding: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 3rem;
     justify-items: center;
     align-items: center;
@@ -17,13 +18,17 @@
     width: 100%;
 }
 
+.edit-delete-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+
 .cards {
     display: flex;
     flex-direction: column;
     width: 70%;
     height: 100%;
-    border: 1px solid rgba(116, 115, 115, 0.542);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
 }
 
@@ -32,4 +37,22 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
+}
+
+.card-info .created-by {
+    color: grey;
+    font-size: 13px;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.card-info div {
+    display: flex;
+    padding: 0 3rem 0 0;
+    gap: 10rem;
+}
+
+.card-info span {
+    font-weight: bold;
+    font-size: 1.1rem;
 }
