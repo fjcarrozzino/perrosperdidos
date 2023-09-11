@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     flex-direction: center;
-    padding: 5rem 15rem 0 15rem;
+    padding: 5rem 5rem 5rem 5rem;
 }
 
 .picture-description-container {
@@ -10,8 +10,13 @@
     gap: 1rem;
     justify-content: center;
     background-color: white;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.25);
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,.25);
     padding: 2rem;
+}
+
+.comentary-container h2 {
+    font-weight: bold;
+    font-size: 1.3rem;
 }
 
 .comentary-container {
@@ -19,11 +24,13 @@
     flex-direction: column;
     justify-content: center;
     background-color: white;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,.25);
+
     padding: 1rem;
     position: relative;
 }
 
-.comentary-container::before {
+/* .comentary-container::before {
     content: "";
     background-color: grey;
     width: 90%;
@@ -32,12 +39,13 @@
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
-}
+} */
 
 .detail-picture {
     background-color: white;
-    height: 40rem;
-    width: 40rem;
+    height: 100%;
+    width: 30rem !important;
+    max-width: 60rem;
 }
 
 .description-container {
@@ -54,4 +62,36 @@
 
 .commentary-div {
     display: flex;
+    border: 1px solid rgb(182, 237, 255);
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,.25);
+    border-radius: 5px;
+    flex-direction: column;
+    padding: .5rem;
+    margin-top: 1rem;
+}
+
+.commentary-user {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.commentary {
+    font-size: 15px;
+    color: rgb(144, 138, 138);
+}
+
+.commentary-input-container {
+    padding: 1rem 0 .5rem 0;
+}
+
+.commentary-input-container .MuiButton-textSizeMedium:hover {
+    background-color: #185EA5;
+}
+
+.commentary-input-container .MuiTextarea-sizeMd:focus-within {
+    --Textarea-focusedHighlight: none;
+}
+
+.commentary-input-container .MuiFormControl-root {
+    width: 100% !important;
 }

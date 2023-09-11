@@ -52,12 +52,15 @@ const PostForm = () => {
       ...prevValues,
       [name]: value,
     }));
+    console.log(name)
+    console.log(value)
+    console.log(e)
 
-    if (value.trim() === "") {
-      setShowOptions(false);
-      setSearchLocation([]);
-      return;
-    }
+    // if ( value === 'Dog' || "Cat" ? value.trim() === "" : '') {
+    //   setShowOptions(false);
+    //   setSearchLocation([]);
+    //   return;
+    // }
   };
 
   const isValidUrl = (string) => {
@@ -97,10 +100,15 @@ const PostForm = () => {
       } catch (error) {
         console.error("Error al guardar el dato:", error);
       }
-    } else {
-      toast.error("The picture must be a valid URL");
+    } else if (!isValidUrl(dataToSave.picture) && !areAllValuesValid) {
       toast.error("All the fields must be completed.");
-    }
+      toast.error("The picture must be a valid URL");
+    } else if (!isValidUrl(dataToSave.picture)){
+      toast.error("The picture must be a valid URL");
+      
+    } else if (!areAllValuesValid) {
+      toast.error("All the fields must be completed.");
+    } 
     // Guardar el valor en Firestore
   };
 
@@ -142,13 +150,14 @@ const PostForm = () => {
         <p>Animal: </p>
         <Select
           name="animal"
-          value={inputValues.animal}
+          // value={inputValues.animal}
           onChange={handleInputChange}
+          defaultValue="Dog"
         >
-          <Option value="Dog" defaultValue="Dog">
+          <Option value="Dog">
             Dog
           </Option>
-          <Option value="Cat" defaultValue="Cat">
+          <Option value="Cat">
             Cat
           </Option>
         </Select>

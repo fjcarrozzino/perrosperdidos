@@ -42,16 +42,12 @@ const UserPosts = () => {
     }, 1000);
   };
 
-  const editPost = (postId) => {
-    navigate(`/postdetail/${postId}`)
-  
-  }
 
   return (
     <div className="card-container">
       {userPosts.length
         ? userPosts.map((info, index) => (
-            <div key={index + info?.breed?.stringValue} onClick={() => editPost(info?.postId?.stringValue)} className="cards">
+            <div key={index + info?.breed?.stringValue} className="cards">
               <div className="card-picture">
                 <img src={info?.picture?.stringValue} alt={info.nombre}></img>
               </div>

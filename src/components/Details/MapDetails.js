@@ -33,7 +33,7 @@ const MapDetails = ({ position }) => {
   const center = [0,0] 
   return (
     <MapContainer
-    style={{height: '400px', width: '700px'}}
+    style={{height: '400px', width: '500px'}}
     center={position ? position : center}
     zoom={13}
     scrollWheelZoom={false}>
