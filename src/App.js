@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Form from "./pages/Form";
 import Home from "./pages/Home";
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/*" element={<Home />} />
           <Route path="/perros" element={<Perros />} />
@@ -74,7 +74,7 @@ function App() {
             <Route path="/*" element={<Home />} />
           )}
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
