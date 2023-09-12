@@ -15,6 +15,7 @@ import DetailsPost from "./pages/DetailsPost";
 import { collection, getDocs } from "firebase/firestore";
 import db from "./firebase/firebaseConfig";
 import EditPostPage from './pages/EditPostPage'
+import "leaflet/dist/leaflet.css";
 
 function App() {
   const dispatch = useDispatch();

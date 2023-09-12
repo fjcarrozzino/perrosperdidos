@@ -126,7 +126,7 @@ const Details = () => {
                 <p><span>Location:</span> {postData.location}</p>
                 <p className="created-by">Created By: {postData.user}</p>
               </div>
-          <div style={{height: '400px'}}>
+          <div >
             <MapDetails position={postData?.latLon} />
           </div>
         </div>
