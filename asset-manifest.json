@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/perrosperdidos/static/css/main.cb77bbc3.css",
-    "main.js": "/perrosperdidos/static/js/main.8378fe40.js",
+    "main.css": "/perrosperdidos/static/css/main.a0e8a0de.css",
+    "main.js": "/perrosperdidos/static/js/main.498ad5ae.js",
     "static/media/georges-malher-XlknK9HfBlg-unsplash.jpg": "/perrosperdidos/static/media/georges-malher-XlknK9HfBlg-unsplash.708f8bb3c6b4cc597d39.jpg",
     "static/media/ryan-stone-cL5THZBD5YQ-unsplash.jpg": "/perrosperdidos/static/media/ryan-stone-cL5THZBD5YQ-unsplash.8c89e182c9661592a84b.jpg",
     "static/media/animal-logo.svg": "/perrosperdidos/static/media/animal-logo.aa3187b3995ea65d34bfce1b2d63fc98.svg",
     "index.html": "/perrosperdidos/index.html",
-    "main.cb77bbc3.css.map": "/perrosperdidos/static/css/main.cb77bbc3.css.map",
-    "main.8378fe40.js.map": "/perrosperdidos/static/js/main.8378fe40.js.map"
+    "main.a0e8a0de.css.map": "/perrosperdidos/static/css/main.a0e8a0de.css.map",
+    "main.498ad5ae.js.map": "/perrosperdidos/static/js/main.498ad5ae.js.map"
   },
   "entrypoints": [
-    "static/css/main.cb77bbc3.css",
-    "static/js/main.8378fe40.js"
+    "static/css/main.a0e8a0de.css",
+    "static/js/main.498ad5ae.js"
   ]
 }
