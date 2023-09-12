@@ -35,8 +35,8 @@ const MapEditPage = ({ center, latLon }) => {
   console.log(latLon)
 
   useEffect(() => {
-    if(center.length) {
-      setPosition(center)
+    if(latLon) {
+      setPosition(latLon)
     }
 
   },[center, latLon, position])

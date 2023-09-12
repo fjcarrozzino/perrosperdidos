@@ -17,13 +17,13 @@ import { Button, Input, Option, Select } from "@mui/joy";
 const PostForm = () => {
   const user = useSelector(selectUser);
   const [inputValues, setInputValues] = useState({
-    animal: "Dog",
     color: "",
     age: "",
     picture: "",
     location: "",
     breed: "",
   });
+  const [selectInput, setSelectInput] = useState("Dog")
   const [center, setCenter] = useState([]);
   const [searchLocation, setSearchLocation] = useState([]);
   const navigate = useNavigate();
@@ -46,21 +46,21 @@ const PostForm = () => {
     };
   }, []);
 
+  const handleSelectChange = (e) => {
+    setSelectInput(e.target.textContent)
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-    console.log(name)
-    console.log(value)
-    console.log(e)
-
-    // if ( value === 'Dog' || "Cat" ? value.trim() === "" : '') {
-    //   setShowOptions(false);
-    //   setSearchLocation([]);
-    //   return;
-    // }
+    if (value.trim() === "") {
+      setShowOptions(false);
+      setSearchLocation([]);
+      return;
+    }
   };
 
   const isValidUrl = (string) => {
@@ -83,6 +83,7 @@ const PostForm = () => {
 
     const valuesToSave = {
       ...dataToSave,
+      animal: selectInput,
       age: ageInputValue,
       user: user?.given_name,
       userId: user?.sub,
@@ -151,7 +152,7 @@ const PostForm = () => {
         <Select
           name="animal"
           // value={inputValues.animal}
-          onChange={handleInputChange}
+          onChange={handleSelectChange}
           defaultValue="Dog"
         >
           <Option value="Dog">

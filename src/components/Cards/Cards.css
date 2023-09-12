@@ -60,3 +60,10 @@
     font-weight: bold;
     font-size: 13px;
 }
+
+.card-edit-info-container {
+    flex-direction: column;
+    display: flex;
+    gap: .7rem;
+    padding: 1rem;
+}

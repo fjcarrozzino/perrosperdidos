@@ -15,11 +15,11 @@ import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import Map from "../components/Map/Map";
 import MapEditPage from "../components/MapEditPage/MapEditPage";
+import { Button, Input, Option, Select } from "@mui/joy";
 
 const EditPostPage = () => {
   const { postId } = useParams();
   const [inputValues, setInputValues] = useState({
-    animal: "",
     color: "",
     age: "",
     picture: "",
@@ -31,8 +31,8 @@ const EditPostPage = () => {
   const [showOptions, setShowOptions] = useState(false); // Nuevo estado
   const [center, setCenter] = useState([]);
   const [searchLocation, setSearchLocation] = useState([]);
-  const [postData, setPostData] = useState([])
-
+  const [postData, setPostData] = useState([]);
+  const [selectInput, setSelectInput] = useState("Dog")
   useEffect(() => {
     const obtenerDatos = async () => {
       const docRef = await doc(db, "mascotas", postId);
@@ -41,7 +41,7 @@ const EditPostPage = () => {
       if (docSnap.exists()) {
         const { animal, color, age, picture, location, breed, user } =
           // setPostData(docSnap.data());
-          docSnap.data()
+          docSnap.data();
         setInputValues({
           animal: animal,
           color: color,
@@ -51,7 +51,7 @@ const EditPostPage = () => {
           breed: breed,
           user: user,
         });
-        setPostData(docSnap.data())
+        setPostData(docSnap.data());
       } else {
         console.log("No such document!");
       }
@@ -61,7 +61,9 @@ const EditPostPage = () => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      const listContainer = document.querySelector(".input-list-location-container");
+      const listContainer = document.querySelector(
+        ".input-list-location-container"
+      );
       if (listContainer && !listContainer.contains(event.target)) {
         setShowOptions(false);
       }
@@ -104,8 +106,9 @@ const EditPostPage = () => {
     const ageInputValue = parseInt(dataToSave.age);
     const valuesToSave = {
       ...dataToSave,
+      animal: selectInput,
       age: ageInputValue,
-      latLon: center,
+      latLon: center.lenght ? center : postData.latLon,
     };
 
     if (isValidUrl(dataToSave.picture)) {
@@ -128,8 +131,9 @@ const EditPostPage = () => {
     setShowOptions(false);
     setInputValues((prevValues) => ({
       ...prevValues,
-      location: location
-    }))
+      animal: selectInput,
+      location: location,
+    }));
   };
 
   const handleKeyDown = (event) => {
@@ -150,10 +154,17 @@ const EditPostPage = () => {
           response.data.find((item) => item.display_name === displayName)
         );
         setSearchLocation(uniqueData);
-        setShowOptions(true)
+        setShowOptions(true);
       });
     }
   };
+
+
+
+
+  const handleSelectChange = (e) => {
+    setSelectInput(e.target.textContent)
+  }
 
   return (
     <>
@@ -163,9 +174,18 @@ const EditPostPage = () => {
           <div className="card-picture">
             <img src={inputValues.picture} alt={inputValues.nombre}></img>
           </div>
-          <div className="card-info">
+          <div className="card-edit-info-container">
             <p>Animal: </p>
-            <select name="animal" value="animal" onChange={handleInputChange}>
+            <Select
+              name="animal"
+              // value={inputValues.animal}
+              onChange={handleSelectChange}
+              defaultValue="Dog"
+            >
+              <Option defaultValue={inputValues.animal === "Dog" ? "Dog" : "Cat"} value="Dog">{inputValues.animal === "Dog" ? "Dog" : "Cat"}</Option>
+              <Option defaultValue={inputValues.animal !== "Dog" ? "Dog" : "Cat"} value="Cat">{inputValues.animal !== "Dog" ? "Dog" : "Cat"}</Option>
+            </Select>
+            {/* <select name="animal" value="animal" onChange={handleInputChange}>
               <option
                 defaultValue={inputValues.animal === "Dog" ? "Dog" : "Cat"}
               >
@@ -176,37 +196,37 @@ const EditPostPage = () => {
               >
                 {inputValues.animal !== "Dog" ? "Dog" : "Cat"}
               </option>
-            </select>
+            </select> */}
             <p>Color:</p>
-            <input
+            <Input
               key="color"
               type="text"
               name="color"
-              defaultValue={inputValues.color}
+              value={inputValues.color}
               onChange={handleInputChange}
             />
             <p>Age:</p>
-            <input
+            <Input
               key="age"
               type="number"
               name="age"
-              defaultValue={inputValues.age}
+              value={inputValues.age}
               onChange={handleInputChange}
             />
             <p>Picture Link:</p>
-            <input
+            <Input
               key="picture"
               type="text"
               name="picture"
-              defaultValue={inputValues.picture}
+              value={inputValues.picture}
               onChange={handleInputChange}
             />
             <p>Breed: </p>
-            <input
+            <Input
               key="breed"
               type="text"
               name="breed"
-              defaultValue={inputValues.breed}
+              value={inputValues.breed}
               onChange={handleInputChange}
             />
             <div className="map-location-container">
@@ -241,12 +261,11 @@ const EditPostPage = () => {
                   ))}
                 </ul>
               </div>
-              <MapEditPage center={center} latLon={postData?.latLon}/>
+              <MapEditPage center={center} latLon={postData?.latLon} />
             </div>
-            <p>Created By: {inputValues.user}</p>
-            <button onClick={(e) => handleSubmitFirebase(e, inputValues)}>
+            <Button onClick={(e) => handleSubmitFirebase(e, inputValues)}>
               Submit
-            </button>
+            </Button>
           </div>
         </div>
         <Toaster position="bottom-right" reverseOrder={false} gutter={8} />
