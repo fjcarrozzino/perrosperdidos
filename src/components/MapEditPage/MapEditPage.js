@@ -45,7 +45,7 @@ const MapEditPage = ({ center, latLon }) => {
 
   return (
     <MapContainer
-    style={{height: '400px', width: '700px'}}
+    style={{height: '400px', width: '100%'}}
     center={position}
     zoom={13}
     scrollWheelZoom={false}>
