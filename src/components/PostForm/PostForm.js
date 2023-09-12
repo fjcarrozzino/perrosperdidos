@@ -13,6 +13,7 @@ import { Autocomplete, Box, TextField } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 import { Button, Input, Option, Select } from "@mui/joy";
+import useDebounce from "../../hooks/useDebounce";
 
 const PostForm = () => {
   const user = useSelector(selectUser);
@@ -30,6 +31,8 @@ const PostForm = () => {
 
   const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
   const [showOptions, setShowOptions] = useState(false); // Nuevo estado
+
+  const debouncedSearch = useDebounce(inputValues.location, 1000)
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -97,7 +100,7 @@ const PostForm = () => {
         toast.success("Your post has been submitted.");
         setTimeout(() => {
           navigate("/");
-        }, 1000);
+        }, 1500);
       } catch (error) {
         console.error("Error al guardar el dato:", error);
       }
@@ -144,6 +147,8 @@ const PostForm = () => {
       });
     }
   };
+
+  
 
   return (
     <div className="postform-container">
